@@ -1,0 +1,132 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+
+// Returns true if the specified player ('X' or 'O') has 3 in a row
+bool checkWin(char board[3][3], char player) {
+    // 1. Check Rows
+    for (int i = 0; i < 3; ++i) {
+        if (board[i][0] == player && board[i][1] == player && board[i][2] == player) {
+            return true;
+        }
+    }
+
+    // 2. Check Columns
+    for (int i = 0; i < 3; ++i) {
+        if (board[0][i] == player && board[1][i] == player && board[2][i] == player) {
+            return true;
+        }
+    }
+
+    // 3. Check Main Diagonal (top-left to bottom-right)
+    if (board[0][0] == player && board[1][1] == player && board[2][2] == player) {
+        return true;
+    }
+
+    // 4. Check Anti-Diagonal (top-right to bottom-left)
+    if (board[0][2] == player && board[1][1] == player && board[2][0] == player) {
+        return true;
+    }
+
+    // No winning combination found
+    return false;
+}
+
+    int xcoord = 0;
+    int ycoord = 0;
+    int pXwins = 0;
+    int pOwins = 0;
+    int game = 0;
+int main() {
+    while (game != 1){
+        // Example board where 'X' has a vertical win in the middle column
+        char board[3][3] = {
+            {'-', '-', '-'},
+            {'-', '-', '-'},
+            {'-', '-', '-'}
+        };
+        std::cout << "this happened" << std::endl;
+        
+        
+        int loop = 0;
+        while (loop != 1) {
+            for (const auto& row : board) {       // Access each row by constant reference
+                for (char val : row) {              // Access each element in the row
+                    std::cout << val << " ";
+                }
+                std::cout << "\n";
+            }
+            
+            std::cout << "Player X's turn." << std::endl;
+            std::cout << "Enter y coordinate (0, 1, 2)";
+            std::cin >> xcoord;
+            std::cout << "Enter x coordinate (0, 1, 2)";
+            std::cin >> ycoord;
+            
+            if (board[xcoord][ycoord] != '-'){
+                std::cout << "Cheating detected! turn skipped!" << std::endl;
+            } else {
+                
+                board[xcoord][ycoord] = 'X';
+            }
+            
+            for (const auto& row : board) {       // Access each row by constant reference
+                for (char val : row) {              // Access each element in the row
+                    std::cout << val << " ";
+                }
+                std::cout << "\n";
+            }
+            if (checkWin(board, 'X')) {
+                loop = 1;
+                std::cout << loop << std::endl;
+                std::cout << "Player X wins!" << std::endl;
+                pXwins ++;
+                std::cout << "Player X has won: " << pXwins << " times!" << std::endl;
+                std::cout << "Player O has won: " << pOwins << " times!" << std::endl;
+                std::cout << "Would you like to end? enter 1 for end, enter 0 for continue.";
+                std::cin >> game;
+            } else {
+                std::cout << "No win detected for X." << std::endl;
+            }
+            std::cout << "Player O's turn." << std::endl;
+            std::cout << "Enter y coordinate (0, 1, 2)";
+            std::cin >> xcoord;
+            std::cout << "Enter x coordinate (0, 1, 2)";
+            std::cin >> ycoord;
+            
+            if (board[xcoord][ycoord] != '-'){
+                std::cout << "Cheating detected! turn skipped!" << std::endl;
+            } else {
+                
+                board[xcoord][ycoord] = 'O';
+            }
+            for (const auto& row : board) {       // Access each row by constant reference
+                for (char val : row) {              // Access each element in the row
+                    std::cout << val << " ";
+                }
+                std::cout << "\n";
+            }
+            
+            
+            if (checkWin(board, 'O')) {
+                loop = 1;
+                std::cout << "Player O wins!" << std::endl;
+                pOwins ++;
+                std::cout << "Player X has won: " << pXwins << " times!" << std::endl;
+                std::cout << "Player O has won: " << pOwins << " times!" << std::endl;
+                std::cout << "Would you like to end? enter 1 for end, enter 0 for continue.";
+                std::cin >> game;
+            } else {
+                std::cout << "No win detected for O." << std::endl;
+            }
+            
+        }
+
+    }
+    return 0;
